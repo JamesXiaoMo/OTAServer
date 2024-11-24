@@ -1,3 +1,6 @@
+import os
+
+
 def init_server_config() -> list[str | int]:
     """
     初始化服务器信息
@@ -35,6 +38,20 @@ def load_firmware_info() -> list[dict]:
     with open('firmware/Firmware_Info.json', 'r', encoding='utf-8') as f:
         firmware_info = json.loads(f.read())
     return firmware_info['Models']
+
+
+def init_firmware(firmware_info: list[dict]) -> list[str]:
+    """
+    初始化固件
+    :param firmware_info: 固件信息列表
+    :return: 固件列表
+    """
+    firmware = []
+    for i in firmware_info:
+        firmware.append(i["name"])
+        if not os.path.exists('firmware/' + i["name"]):
+            os.mkdir('firmware/' + i["name"])
+    return firmware
 
 
 def init():
