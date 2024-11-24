@@ -56,7 +56,7 @@
 #
 #     uvicorn.run(app, host="0.0.0.0", port=5000)
 from fastapi import FastAPI
-from libs import init
+from libs import Init
 
 
 app = FastAPI()
@@ -68,6 +68,6 @@ async def root():
 
 
 if __name__ == "__main__":
-    init.init()
+    Init.init()
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=110)

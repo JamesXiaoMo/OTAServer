@@ -1,0 +1,12 @@
+{
+  "Models" : [
+    {
+      "name" : "FionaPhoneTestDevice0",
+      "status" : "develop"
+    },
+    {
+      "name" : "FionaPhoneTestDevice1",
+      "status" : "develop"
+    }
+  ]
+}
