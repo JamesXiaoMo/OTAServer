@@ -58,7 +58,6 @@
 from fastapi import FastAPI
 from libs import Init
 
-
 app = FastAPI()
 
 
@@ -69,5 +68,8 @@ async def root():
 
 if __name__ == "__main__":
     Init.init()
+    server_config = Init.init_server_config()
+    firmware_info = Init.load_firmware_info()
+
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=110)
+    uvicorn.run(app, host=server_config[0], port=server_config[1])
