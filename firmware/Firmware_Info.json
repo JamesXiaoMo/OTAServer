@@ -2,11 +2,11 @@
   "Models" : [
     {
       "name" : "FionaPhoneTestDevice0",
-      "status" : "develop"
+      "status" : "Develop"
     },
     {
       "name" : "FionaPhoneTestDevice1",
-      "status" : "develop"
+      "status" : "Develop"
     }
   ]
 }
