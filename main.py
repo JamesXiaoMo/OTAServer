@@ -57,8 +57,8 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 #
 #     uvicorn.run(app, host="0.0.0.0", port=5000)
 import os
-
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from libs import Init
 
 app = FastAPI()
@@ -89,6 +89,32 @@ async def ota_upload(file: UploadFile = File(...), series: str = Query(...)):
         return {"message": "Firmware uploaded successfully!"}
 
 
+@app.get("/ota")
+async def ota_update(series: str = Query(...), version: str = Query(...)):
+    """
+    提供OTA更新功能
+    :param series: 固件系列
+    :param version: 固件版本
+    :return:
+    """
+    if series not in firmware_series:
+        raise HTTPException(status_code=404, detail="Invalid series name,This series is not exist.")
+    status = None
+    for i in firmware_info:
+        if i['name'] == series:
+            status = i['status']
+    if status == "develop":
+        firmware_path = os.path.join("firmware", series + "firmware.bin")
+        if os.path.exists(firmware_path):
+            return FileResponse(
+                firmware_path,
+                media_type="application/octet-stream",
+                filename="firmware.bin",
+            )
+        else:
+            raise HTTPException(status_code=404, detail="Firmware not found")
+
+
 if __name__ == "__main__":
     Init.init()
     server_config = Init.init_server_config()
@@ -96,4 +122,5 @@ if __name__ == "__main__":
     firmware_series = Init.init_firmware(firmware_info)
 
     import uvicorn
+
     uvicorn.run(app, host=server_config[0], port=server_config[1])
