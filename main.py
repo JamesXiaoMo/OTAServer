@@ -44,6 +44,7 @@ async def ota_update(series: str = Query(...), version: str = Query(...)):
     if series not in firmware_series:
         raise HTTPException(status_code=404, detail="Invalid series name,This series is not exist.")
 
+
     for i in firmware_info:
         if i['name'] == series:
             status = i['status']
